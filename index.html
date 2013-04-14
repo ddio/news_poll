@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="zh-TW"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="zh-TW"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="zh-TW"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="zh-TW"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv=”Content-Language” content=”zh-tw”>
+		<title>臺灣守護民主平台 2013 民主事件評選活動</title>
+		<meta name="description" content="候選事件的挑選期間，從 2012 年 5 月到 2013 年 4 列出。有部分事件現象因為彼此相關，故合併為一件">
+		<meta name="author" content="臺灣守護民主平台">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="css/base.css">
+		<link rel="stylesheet" href="css/skeleton.css">
+		<link rel="stylesheet" href="css/layout.css">
+		<link rel="stylesheet" href="css/jquery-ui.min.css">
+		<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+
+	<div class="container">
+		<div class="sixteen columns">
+			<h1 style="margin-top: 40px">臺灣守護民主平台 2013 民主事件評選活動</h1>
+			<hr>
+		</div>
+		<div id="descriptions" class="sixteen columns">
+			<h2>活動說明</h2>
+			<ol>
+				<li>請自底下「民主事件候選清單」圈選10件您認為最重要的民主事件。 </li>
+				<li>候選事件的挑選期間，從 2012 年 5 月到 2013 年 4 月底，依照發生日期由近到遠依次列出。有部分事件現象因為彼此相關，故合併為一件。 </li>
+				<li>如有任何意見或建議，或認為本次票選清單遺漏哪些「重要的事件」，請利用「留言」欄位，我們將審慎列入考量。</li>
+			</ol>
+		</div>
+		<div id="rules" class="sixteen columns">
+			<h2>年度民主事件遴選原則</h2>
+			<ol>
+				<li>請考量涉及政治民主、民主社會，民主文化或外部因素四大層面之重大事件、議題、爭議。四大層面說明如下。 
+				<ol>
+					<li>政治民主：指國家（包括中央及地方）權力行使，涉及權力分立、法治國原則、正當程序、人民參與，以及基本權保障等問題的面向。</li>
+					<li>民主社會：包括兩個次面向。一是，相對於國家權力行使的社會力的面向； 二是，社會內部的結構，涉及民主參與地位的均等或不均等問題的面向；</li>
+					<li>民主文化：指社會內部的民主認知。（例如，出現女性總統候選人，族群歧視言論）</li>
+					<li>外部因素：指國家外部的力量對國家內部民主發展發生影響力的面向。</li>
+				</ol>
+				</li>
+				<li>選取時，可以較具歷史、長期、前瞻的結構性考量來遴選。</li>
+				<li>選取時，請注意不要過於集中某些指標類別的事件，盡量均衡選取。</li>
+			</ol>
+		</div>
+		<div id="news-form-wrapper" class="sixteen columns">
+			<h2>以下開始進行圈選</h2>
+			<form id="news-form">
+				<input type="text" class="required" name="name" placeholder="姓名" />
+				<input type="text" class="required email" name="email" placeholder="電子郵件" />
+				<p> 勾選十大事件 * 請圈選 10 件 <br>
+					<span class="comment">* 本表單中「事件說明」僅供徵詢時參考之用，記者會發表及未來公佈時，會有更進一步的闡述與分析。</span>
+				</p>
+				<div class="news-list" data-bind="foreach: newsList">
+					<div class="news">
+						<input type="checkbox" data-bind="checked: checked, attr: { 'id': 'news-'+$index }">
+						<label data-bind="attr: {for: 'news-'+$index}">
+							<p class="title" data-bind="text: title"></p>
+							<p class="notes" data-bind="visible: showNotes, text: notes"></p>
+						</label>
+					</div>
+				</div>
+			<form>
+		</div>
+	</div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/localization/messages_zh_tw.js"></script>
+	<script src="js/html5placeholder.jquery.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/news.js"></script>
+
+</body>
+</html>
