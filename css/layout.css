@@ -22,6 +22,51 @@ span.comment {
 	padding: 0px;
 }
 
+.news {
+	border-top: 1px solid #ccc;
+	padding: 6px 3px;
+}
+
+.news label {
+	display: inline;
+}
+
+.news .title,
+.news .index {
+	font-size: 1.4em;
+}
+
+.news .tags-wrapper,
+.news .more,
+.news .notes {
+	display: block;
+	padding-left: 26px;
+}
+
+.news .tags-wrapper {
+	margin: 6px 0px;
+}
+
+.news .tags-wrapper .tag {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	padding: 1px 2px;
+	margin-right: 2px;
+	border: 1px solid #555;
+	background-color: #aaa;
+}
+
+.news .more {
+	font-size: 0.8em;
+	color: green;
+	cursor: pointer;
+}
+
+.news .notes {
+	color: #777;
+}
+
 /* #Page Styles
 ================================================== */
 

@@ -58,10 +58,15 @@
 				</p>
 				<div class="news-list" data-bind="foreach: newsList">
 					<div class="news">
-						<input type="checkbox" data-bind="checked: checked, attr: { 'id': 'news-'+$index }">
-						<label data-bind="attr: {for: 'news-'+$index}">
-							<p class="title" data-bind="text: title"></p>
-							<p class="notes" data-bind="visible: showNotes, text: notes"></p>
+						<input type="checkbox" data-bind="checked: checked, attr: { 'id': 'news-'+$index() }">
+						<label data-bind="attr: {for: 'news-'+$index()}">
+							<span class="index" data-bind="text: ($index()+1)+'.'"></span>
+							<span class="title" data-bind="text: title"></span>
+							<div class="tags-wrapper" data-bind="foreach: tags">
+								<span class="tag" data-bind="text: $data"></span>
+							</div>
+							<span class="notes" data-bind="visible: noteEnabled, text: notes"></span>
+							<a class="more" data-bind="text: showHideMsg, click: switchNotes"></a>
 						</label>
 					</div>
 				</div>
