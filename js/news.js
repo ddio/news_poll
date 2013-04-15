@@ -3,14 +3,29 @@
 function newsVM() {
 	var self = this;
 
+	this.name = ko.observable('');
+	this.email = ko.observable('');
 	this.newsList = ko.observableArray();
 	this.tags = ko.observableArray();
-	this.maxSelected = 10;
+	this.maxSelected = 3;
 	this.curSelected = ko.observable(0);
 	this.spaceLeave = ko.computed( function() { 
 		return self.maxSelected - self.curSelected();
 	});
-
+	this.allowSubmit = ko.computed( function() {
+		return 	self.name() && 
+				self.email() &&
+				self.spaceLeave() >= 0 &&
+				self.curSelected() > 0;
+	});
+	this.prepareSubmit = function() {
+		if( self.allowSubmit() ) {
+			$('#summary').dialog('open');
+		}
+	};
+	this.submit = function() {
+		alert('還沒作到這邊呦～');
+	}
 
 	var feedUrl = 'http://spreadsheets.google.com/feeds/cells',
 		feedParas = '/public/basic?alt=json-in-script',
@@ -72,6 +87,13 @@ $(function() {
 	$('input.required').placeholder();
 	$('#news-form').validate();
 
+	$('#summary').dialog({
+		autoOpen: false,
+		dialogClass: 'summary-dia',
+		width: 600,
+		height: $(window).height() - 160
+	});
+
 	Sammy( function() {
 
 		this.get( /.*\/poll/, function() {
@@ -80,5 +102,6 @@ $(function() {
 			$('#news-form-wrapper').show();
 			$('#poll-info').show();
 		});
+
 	}).run();
 });

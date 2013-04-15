@@ -50,9 +50,9 @@
 			<a href="poll"><button> 開始勾選 </button></a>
 		</div>
 		<div id="news-form-wrapper" class="sixteen columns">
-			<form id="news-form">
-				<input type="text" class="required" name="name" placeholder="姓名" />
-				<input type="text" class="required email" name="email" placeholder="電子郵件" />
+			<form id="news-form" data-bind="submit: prepareSubmit">
+				<input type="text" class="required" name="name" data-bind="value: name, valueUpdate: 'afterkeydown'" placeholder="姓名" />
+				<input type="text" class="required email" name="email" data-bind="value: email, valueUpdate: 'afterkeydown'" placeholder="電子郵件" />
 				<p> 勾選十大事件 * 請圈選 10 件 <br>
 					<span class="comment">* 本表單中「事件說明」僅供徵詢時參考之用，記者會發表及未來公佈時，會有更進一步的闡述與分析。</span>
 				</p>
@@ -73,10 +73,32 @@
 			</form>
 		</div>
 		<div id="poll-info" class="sixteen columns">
-			已選 <span data-bind="text: curSelected"></span> 則，
-			<span data-bind="visible: spaceLeave() >= 0">尚餘 <span data-bind="text: spaceLeave()"></span> 則可選。</span>
-			<span class="warning" data-bind="visible: spaceLeave() < 0">超出 <span data-bind="text: spaceLeave()*-1"></span> 則。</span>
+			<p>
+				已選 <span data-bind="text: curSelected"></span> 則，
+				<span data-bind="visible: spaceLeave() >= 0">尚餘 <span data-bind="text: spaceLeave()"></span> 則可選。</span>
+				<span class="warning" data-bind="visible: spaceLeave() < 0">超出 <span data-bind="text: spaceLeave()*-1"></span> 則。</span>
+			</p>
+				
+			<button data-bind="enable: allowSubmit, click: prepareSubmit" >確定送出</button>
 		</div>
+	</div>
+	<div id="summary" class="hide">
+		<h2> 這是您所選擇的十大事件 </h2>
+		<hr> 
+		<p> <span class="name"> 姓名： </span><span class="value" data-bind="text: name"></span></span> </p>
+		<p> <span class="name"> 電子郵件： </span><span class="value" data-bind="text: email"></span></span> </p>
+		<p>請注意避免過於集中某些指標類別的事件，盡量均衡選取，檢查後按送出，謝謝您的大力支持、參與。 </p>
+		<div data-bind="foreach: newsList">
+			<div class="news" data-bind="visible: checked">
+				<span class="index" data-bind="text: ($index()+1)+'.'"></span>
+				<span class="title" data-bind="text: title"></span>
+				<div class="tags-wrapper" data-bind="foreach: tags">
+					<span class="tag" data-bind="text: $data"></span>
+				</div>
+				<span class="notes" data-bind="text: notes"></span>
+			</div>
+		</div>
+		<button data-bind="click: submit">謝謝，我要送出了</button>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
@@ -86,6 +108,5 @@
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/sammy.js"></script>
 	<script src="js/news.js"></script>
-
 </body>
 </html>

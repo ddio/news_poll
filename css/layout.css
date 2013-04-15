@@ -22,6 +22,18 @@ span.comment {
 	padding: 0px;
 }
 
+.summary-dia .ui-dialog-titlebar {
+	display: none;
+}
+
+#summary .name {
+	color: #777;
+}
+
+#summary button {
+	float: right;
+}
+
 #rules button {
 	float: right;
 }
@@ -45,12 +57,22 @@ span.comment {
 	background-color: #eee;
 }
 
+#poll-info p {
+	line-height: 30px;
+	float: left;
+}
+
 #poll-info span span {
 	font-weight: bold;
 }
 
-#poll-info span.warning span {
+#poll-info span.warning {
 	color: red;
+	font-weight: bold;
+}
+
+#poll-info button {
+	float: right;
 }
 
 .news {
