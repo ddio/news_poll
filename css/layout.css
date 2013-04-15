@@ -16,10 +16,34 @@
 
 /* #Site Styles
 ================================================== */
-span.comment {
+body {
+	background-image: url('images/wavegrid.png');
+	border-top: 3px solid #c7a402;
+}
+.container h1 {
+	color: #615101;
+}
+.container h2 {
+	font-size: 30px;
+	margin-top: 10px;
+}
+
+#descriptions ol,
+#rules ol {
+	color: #777;
+}
+
+.comment {
 	color: #777;
 	font-size: 0.8em;
 	padding: 0px;
+}
+
+.summary-dia.ui-widget-content {
+	border-color: #c7a402;
+	border-width: 2px;
+	background: #fff;
+	opacity: 0.9; filter:alpha(opacity=90);
 }
 
 .summary-dia .ui-dialog-titlebar {
@@ -28,6 +52,7 @@ span.comment {
 
 #summary {
 	font-size: 0.9em;
+	background-color: #fff;
 }
 
 #summary .name {
@@ -62,8 +87,8 @@ span.comment {
 	position: fixed;
 	bottom: 0px;
 	display: none;
-	border-top: 1px solid #ccc;
-	background-color: #eee;
+	border-top: 3px solid #c7a402;
+	background-color: #fff;
 }
 
 #poll-info p {
@@ -118,10 +143,11 @@ span.comment {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
-	padding: 1px 2px;
+	padding: 1px 3px;
 	margin-right: 2px;
-	border: 1px solid #555;
-	background-color: #aaa;
+	border: 1px solid #c7a402;
+	background-color: #fff;
+	color: #f8cd02;
 }
 
 .news .notes {

@@ -83,11 +83,11 @@
 		</div>
 	</div>
 	<div id="summary" class="hide">
-		<h2> 這是您所選擇的十大事件 </h2>
+		<h3> 這是您所選擇的十大事件 </h3>
 		<hr> 
 		<p> <span class="name"> 姓名： </span><span class="value" data-bind="text: name"></span></span> </p>
 		<p> <span class="name"> 電子郵件： </span><span class="value" data-bind="text: email"></span></span> </p>
-		<p>請注意避免過於集中某些指標類別的事件，盡量均衡選取，檢查後按送出，謝謝您的大力支持、參與。 </p>
+		<p class="comment">請注意避免過於集中某些指標類別的事件，盡量均衡選取，檢查後按送出，謝謝您的大力支持、參與。 </p>
 		<div data-bind="foreach: newsList">
 			<div class="news" data-bind="visible: checked">
 				<span class="index" data-bind="text: ($index()+1)+'.'"></span>

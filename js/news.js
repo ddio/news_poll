@@ -131,6 +131,7 @@ $(function() {
 		dialogClass: 'summary-dia',
 		width: 900,
 		show: 'slow',
+		modal: 'true',
 		height: $(window).height() - 160
 	});
 
