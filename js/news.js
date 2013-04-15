@@ -125,7 +125,6 @@ $(function() {
 
 	ko.applyBindings( new newsVM() );
 	$('input.required').placeholder();
-	$('#news-form').validate();
 
 	$('#summary').dialog({
 		autoOpen: false,
