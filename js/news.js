@@ -90,7 +90,7 @@ $(function() {
 	$('#summary').dialog({
 		autoOpen: false,
 		dialogClass: 'summary-dia',
-		width: 600,
+		width: 800,
 		height: $(window).height() - 160
 	});
 
