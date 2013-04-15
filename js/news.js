@@ -7,24 +7,64 @@ function newsVM() {
 	this.email = ko.observable('');
 	this.newsList = ko.observableArray();
 	this.tags = ko.observableArray();
-	this.maxSelected = 3;
+	this.maxSelected = 10;
 	this.curSelected = ko.observable(0);
 	this.spaceLeave = ko.computed( function() { 
 		return self.maxSelected - self.curSelected();
 	});
+	this.nameChecker = ko.computed( function() {
+		return self.curSelected() == 0 || !!self.name();
+	});
+	this.emailChecker = ko.computed( function() {
+		var emailReg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+		return self.curSelected() == 0 || self.email().match( emailReg );
+	});
+	this.userInvalid = ko.computed( function() {
+		return !self.nameChecker() || !self.emailChecker();
+	});
 	this.allowSubmit = ko.computed( function() {
-		return 	self.name() && 
-				self.email() &&
+		return 	!self.userInvalid() && 
 				self.spaceLeave() >= 0 &&
 				self.curSelected() > 0;
 	});
 	this.prepareSubmit = function() {
 		if( self.allowSubmit() ) {
 			$('#summary').dialog('open');
+			$('#summary').scrollTop(0);
 		}
 	};
+	
+	this.cancel = function() {
+			$('#summary').dialog('close');
+	}
+
+	var formUrl = 'https://docs.google.com/forms/d/',
+		formKey = '1fAKVvzLFP32DFAaHK-PN94a7cjQsffuoCw0dMIflKmM',
+		formTail = '/formResponse';
+
 	this.submit = function() {
-		alert('還沒作到這邊呦～');
+		var selectedNews = [];
+
+		$.each( self.newsList(), function( indx, news ) {
+			if( news.checked() ) {
+				selectedNews.push( indx+1 );
+			}
+		});
+
+		$.ajax( formUrl+formKey+formTail, {
+			type: 'POST',
+			dataType: 'xml',
+			data: {
+				'entry.54981871': self.name(),
+				'entry.242987477': self.email(),
+				'entry.695619516': selectedNews
+			},
+			traditional: true,
+			complete: function( resp ) {
+				alert('資料已送出， 謝謝您的大力支持、參與。');
+				$('#summary').dialog('close');
+			}
+		});
 	}
 
 	var feedUrl = 'http://spreadsheets.google.com/feeds/cells',
@@ -57,8 +97,8 @@ function newsVM() {
 				news.noteEnabled = ko.computed( function() {
 					return this.thisNoteEnabled();
 				}, news);
-				news.showHideMsg = ko.computed( function() {
-					return this.noteEnabled() ? 'less' : 'more';
+				news.msg = ko.computed( function() {
+					return this.noteEnabled() ? '' : '展開詳細說明';
 				}, news);
 				news.switchNotes = function( thisNews ) {
 					thisNews.thisNoteEnabled( !thisNews.thisNoteEnabled() );
@@ -90,7 +130,8 @@ $(function() {
 	$('#summary').dialog({
 		autoOpen: false,
 		dialogClass: 'summary-dia',
-		width: 800,
+		width: 900,
+		show: 'slow',
 		height: $(window).height() - 160
 	});
 

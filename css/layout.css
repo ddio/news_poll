@@ -26,12 +26,17 @@ span.comment {
 	display: none;
 }
 
+#summary {
+	font-size: 0.9em;
+}
+
 #summary .name {
 	color: #777;
 }
 
 #summary button {
 	float: right;
+	margin-left: 6px;
 }
 
 #rules button {
@@ -45,6 +50,10 @@ span.comment {
 #news-form-wrapper {
 	display: none;
 	margin-bottom: 50px;
+}
+
+#news-form input.warning {
+	border: 2px solid red;
 }
 
 #poll-info {
@@ -86,6 +95,7 @@ span.comment {
 
 .news label {
 	display: inline;
+	cursor: pointer;
 }
 
 .news .title,
@@ -114,14 +124,17 @@ span.comment {
 	background-color: #aaa;
 }
 
-.news .more {
-	font-size: 0.8em;
-	color: green;
+.news .notes {
+	color: #777;
+	height: 2.0em;
+	line-height: 1.4em;
+	overflow: hidden;
 	cursor: pointer;
 }
 
-.news .notes {
-	color: #777;
+.news .notes.more {
+	cursor: default;
+	height: auto;
 }
 
 /* #Page Styles
