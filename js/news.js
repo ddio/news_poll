@@ -102,6 +102,12 @@ $(function() {
 			$('#news-form-wrapper').show();
 			$('#poll-info').show();
 		});
+		this.get('', function() {
+			$('#descriptions').show();
+			$('#rules').show();
+			$('#news-form-wrapper').hide();
+			$('#poll-info').hide();
+		});
 
 	}).run();
 });
