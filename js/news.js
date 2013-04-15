@@ -5,6 +5,11 @@ function newsVM() {
 
 	this.newsList = ko.observableArray();
 	this.tags = ko.observableArray();
+	this.maxSelected = 10;
+	this.curSelected = ko.observable(0);
+	this.spaceLeave = ko.computed( function() { 
+		return self.maxSelected - self.curSelected();
+	});
 
 
 	var feedUrl = 'http://spreadsheets.google.com/feeds/cells',
@@ -16,12 +21,23 @@ function newsVM() {
 				indx = 3;
 
 			while( indx < totalCells ) {
-				var news = {};
+				var news = {},
+					checkedCache = ko.observable( false );
 
 				news.title = cells[indx].content.$t;
 				news.tags = cells[indx+1].content.$t;
 				news.notes = cells[indx+2].content.$t;
-				news.checked = ko.observable( false );
+				news.checked = ko.computed({
+					read: function() { return this(); },
+					write: function( v ) {
+						if( v ) {
+							self.curSelected( self.curSelected()+1 );
+						} else {
+							self.curSelected( self.curSelected()-1 );
+						}
+						this( v );
+					}
+				}, checkedCache); 
 				news.thisNoteEnabled = ko.observable( false );
 				news.noteEnabled = ko.computed( function() {
 					return this.thisNoteEnabled();
@@ -55,4 +71,14 @@ $(function() {
 	ko.applyBindings( new newsVM() );
 	$('input.required').placeholder();
 	$('#news-form').validate();
+
+	Sammy( function() {
+
+		this.get( /.*\/poll/, function() {
+			$('#descriptions').hide();
+			$('#rules').hide();
+			$('#news-form-wrapper').show();
+			$('#poll-info').show();
+		});
+	}).run();
 });

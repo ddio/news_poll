@@ -22,9 +22,44 @@ span.comment {
 	padding: 0px;
 }
 
+#rules button {
+	float: right;
+}
+
+.hide {
+	display: none;
+}
+
+#news-form-wrapper {
+	display: none;
+	margin-bottom: 50px;
+}
+
+#poll-info {
+	height: 30px;
+	padding: 10px;
+	position: fixed;
+	bottom: 0px;
+	display: none;
+	border-top: 1px solid #ccc;
+	background-color: #eee;
+}
+
+#poll-info span span {
+	font-weight: bold;
+}
+
+#poll-info span.warning span {
+	color: red;
+}
+
 .news {
 	border-top: 1px solid #ccc;
 	padding: 6px 3px;
+}
+
+.news.checked .title {
+	font-weight: bold;
 }
 
 .news label {

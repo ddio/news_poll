@@ -47,9 +47,9 @@
 				<li>選取時，可以較具歷史、長期、前瞻的結構性考量來遴選。</li>
 				<li>選取時，請注意不要過於集中某些指標類別的事件，盡量均衡選取。</li>
 			</ol>
+			<a href="poll"><button> 開始勾選 </button></a>
 		</div>
 		<div id="news-form-wrapper" class="sixteen columns">
-			<h2>以下開始進行圈選</h2>
 			<form id="news-form">
 				<input type="text" class="required" name="name" placeholder="姓名" />
 				<input type="text" class="required email" name="email" placeholder="電子郵件" />
@@ -57,7 +57,7 @@
 					<span class="comment">* 本表單中「事件說明」僅供徵詢時參考之用，記者會發表及未來公佈時，會有更進一步的闡述與分析。</span>
 				</p>
 				<div class="news-list" data-bind="foreach: newsList">
-					<div class="news">
+					<div class="news" data-bind="css: { checked: checked }">
 						<input type="checkbox" data-bind="checked: checked, attr: { 'id': 'news-'+$index() }">
 						<label data-bind="attr: {for: 'news-'+$index()}">
 							<span class="index" data-bind="text: ($index()+1)+'.'"></span>
@@ -70,7 +70,12 @@
 						</label>
 					</div>
 				</div>
-			<form>
+			</form>
+		</div>
+		<div id="poll-info" class="sixteen columns">
+			已選 <span data-bind="text: curSelected"></span> 則，
+			<span data-bind="visible: spaceLeave() >= 0">尚餘 <span data-bind="text: spaceLeave()"></span> 則可選。</span>
+			<span class="warning" data-bind="visible: spaceLeave() < 0">超出 <span data-bind="text: spaceLeave()*-1"></span> 則。</span>
 		</div>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -79,6 +84,7 @@
 	<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/localization/messages_zh_tw.js"></script>
 	<script src="js/html5placeholder.jquery.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/sammy.js"></script>
 	<script src="js/news.js"></script>
 
 </body>
