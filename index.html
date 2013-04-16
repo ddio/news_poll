@@ -65,7 +65,10 @@
 							<div class="tags-wrapper" data-bind="foreach: tags">
 								<span class="tag" data-bind="text: $data"></span>
 							</div>
-							<span class="notes" data-bind="attr: { title: msg},css: {more: noteEnabled}, text: notes, click: switchNotes"></span>
+							<div class="note-wrapper" data-bind="css: { showmore: noteEnabled, showless: !noteEnabled() }">
+								<span class="notes" data-bind="attr: { title: msg},css: {more: noteEnabled}, text: notes, click: switchNotes"></span>
+								<span class="readmore ui-icon ui-icon-grip-solid-horizontal" data-bind="visible: !noteEnabled()"></span>
+							</div>
 						</label>
 					</div>
 				</div>
