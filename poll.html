@@ -25,7 +25,7 @@
 			<h1 style="margin-top: 40px">臺灣守護民主平台 2013 民主事件評選活動</h1>
 			<hr>
 		</div>
-		<div id="descriptions" class="sixteen columns">
+		<div id="descriptions" class="sixteen columns p1">
 			<h2>活動說明</h2>
 			<ol>
 				<li>請自底下「民主事件候選清單」圈選10件您認為最重要的民主事件。 </li>
@@ -33,7 +33,7 @@
 				<li>如有任何意見或建議，或認為本次票選清單遺漏哪些「重要的事件」，請利用「留言」欄位，我們將審慎列入考量。</li>
 			</ol>
 		</div>
-		<div id="rules" class="sixteen columns">
+		<div id="rules" class="sixteen columns p1">
 			<h2>年度民主事件遴選原則</h2>
 			<ol>
 				<li>請考量涉及政治民主、民主社會，民主文化或外部因素四大層面之重大事件、議題、爭議。四大層面說明如下。 
@@ -49,7 +49,7 @@
 			</ol>
 			<a href="poll"><button> 開始勾選 </button></a>
 		</div>
-		<div id="news-form-wrapper" class="sixteen columns">
+		<div id="news-form-wrapper" class="twelve columns p2">
 			<form id="news-form" data-bind="submit: prepareSubmit">
 				<input type="text" class="required" name="name" data-bind="value: name, valueUpdate: 'afterkeydown', css: { warning: !nameChecker() }" placeholder="姓名" />
 				<input type="text" class="required email" name="email" data-bind="value: email, valueUpdate: 'afterkeydown', css: { warning: !emailChecker()}" placeholder="電子郵件" />
@@ -57,11 +57,11 @@
 					<span class="comment">* 本表單中「事件說明」僅供徵詢時參考之用，記者會發表及未來公佈時，會有更進一步的闡述與分析。</span>
 				</p>
 				<div class="news-list" data-bind="foreach: newsList">
-					<div class="news" data-bind="css: { checked: checked }">
-						<input type="checkbox" data-bind="checked: checked, attr: { 'id': 'news-'+$index() }">
-						<label data-bind="attr: {for: 'news-'+$index()}">
-							<span class="index" data-bind="text: ($index()+1)+'.'"></span>
-							<span class="title" data-bind="text: title"></span>
+					<div class="news" data-bind="css: { checked: checked }, attr: {id: 'news'+id}">
+						<input type="checkbox" data-bind="checked: checked, attr: { 'id': 'news-'+id }">
+						<label data-bind="attr: {for: 'news-'+id}">
+								<span class="index" data-bind="text: id+'.'"></span>
+								<span class="title" data-bind="text: title"></span>
 							<div class="tags-wrapper" data-bind="foreach: tags">
 								<span class="tag" data-bind="text: $data"></span>
 							</div>
@@ -74,23 +74,46 @@
 				</div>
 			</form>
 		</div>
-		<div id="poll-info" class="sixteen columns">
+		<div id="summary-wrapper" class="four columns p2">
+			<div id="tags-summary" class="rtsummary">
+				<p class="title"> 已選類別統計 </p>
+				<div class="list" data-bind="foreach: tagsList">
+					<div> 
+						<span data-bind="text: name"> </span>
+						(<span data-bind="text: cur"></span>/<span data-bind="text: total"></span>)
+					</div>
+				</div>
+			</div>
+			<div id="news-summary" class="rtsummary">
+				<p class="title"> 已選事件統計 </p>
+				<div class="list" data-bind="foreach: curSelected">
+					<p class="toolong clearfix">
+						<a data-bind="attr: {href: '#news' + id}">
+							<span class="main" data-bind="text: id + '.' + title"></span>
+							<span class="rest">...</span>
+						</a>
+					</p>
+				</div>
+			</div>
+
+		</div>
+		<div id="poll-info" class="twelve columns p2">
 			<p>
 			<span class="warning" data-bind="visible: userInvalid"> 請填寫正確姓名、電子郵件 </span>
-				已選 <span data-bind="text: curSelected"></span> 則，
+				已選 <span data-bind="text: curSelected().length"></span> 則，
 				<span data-bind="visible: spaceLeave() >= 0">尚餘 <span data-bind="text: spaceLeave()"></span> 則可選。</span>
 				<span class="warning" data-bind="visible: spaceLeave() < 0">超出 <span data-bind="text: spaceLeave()*-1"></span> 則。</span>
 			</p>
 				
-			<button data-bind="enable: allowSubmit, click: prepareSubmit" >確定送出</button>
+			<button data-bind="enable: allowSubmit, click: prepareSubmit, text: submitText" ></button>
 		</div>
 	</div>
 	<div id="summary" class="hide">
 		<h3> 這是您所選擇的十大事件 </h3>
+		<p class="comment">請注意避免過於集中某些指標類別的事件，盡量均衡選取，檢查後按送出，謝謝您的大力支持、參與。 </p>
 		<hr> 
 		<p> <span class="name"> 姓名： </span><span class="value" data-bind="text: name"></span></span> </p>
 		<p> <span class="name"> 電子郵件： </span><span class="value" data-bind="text: email"></span></span> </p>
-		<p class="comment">請注意避免過於集中某些指標類別的事件，盡量均衡選取，檢查後按送出，謝謝您的大力支持、參與。 </p>
 		<div data-bind="foreach: newsList">
 			<div class="news" data-bind="visible: checked">
 				<span class="index" data-bind="text: ($index()+1)+'.'"></span>

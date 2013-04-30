@@ -30,13 +30,17 @@ body {
 
 #descriptions ol,
 #rules ol {
-	color: #777;
+	color: #555;
 }
 
 .comment {
 	color: #777;
 	font-size: 0.8em;
 	padding: 0px;
+}
+
+#summary .comment {
+	font-size: 1.4em;
 }
 
 .summary-dia.ui-widget-content {
@@ -127,6 +131,7 @@ body {
 .news .title,
 .news .index {
 	font-size: 1.4em;
+	text-decoration: none;
 }
 
 .news .note-wrapper.showmore,
@@ -184,8 +189,56 @@ body {
 	height: auto;
 }
 
-/* #Page Styles
-================================================== */
+#summary-wrapper .rtsummary {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #c7a402;
+	margin-bottom: 10px;
+/*	background-color: #f8cd02;*/
+}
+
+#summary-wrapper .rtsummary p.title {
+	text-align: center;
+	font-size: 1.2em;
+	padding: 3px 0px;
+	margin: 0px;
+	-moz-border-top-radius: 3px;
+	-webkit-border-top-radius: 3px;
+	border-top-radius: 3px;
+	background-color: #f8cd02;
+	color: #fff;
+}
+
+#summary-wrapper .rtsummary div.list {
+	text-align: right;
+	padding: 1px 3px;
+	margin: 6px 0px;
+}
+
+#summary-wrapper .rtsummary div.list .toolong {
+	overflow: hidden;
+	height: 1em;
+	line-height: 1em;
+	margin: 7px 0px;
+}
+
+#summary-wrapper .rtsummary div.list .toolong a:hover {
+	text-decoration: underline;
+}
+
+#summary-wrapper .rtsummary div.list .toolong .main {
+	float: left;
+	width: 97%;
+}
+
+#summary-wrapper .rtsummary div.list .toolong .rest {
+	float: right;
+	width: 3%;
+	text-align: left;
+}
+
+/* #Page Styles================================================== */
 
 /* #Media Queries
 ================================================== */

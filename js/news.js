@@ -1,23 +1,72 @@
 'use strict';
 
+var newsCount = 1;
+
+function News( vm, cells, indx ) {
+	var self = this,
+		checkedCache = ko.observable( false );
+
+	this.title = cells[indx].content.$t;
+	this.id = newsCount++;
+	this.tags = cells[indx+1].content.$t;
+	this.notes = cells[indx+2].content.$t;
+	this.checked = ko.computed({
+		read: function() { return this(); },
+		write: function( v ) {
+			var step = v ? 1 : -1;
+			if( v ) {
+				vm.curSelected.push( self );
+			} else {
+				vm.curSelected.remove( self );
+			}
+			$.each( self.tags, function(i,tag) {
+				vm.tags[tag].cur( vm.tags[tag].cur() + step )
+			});
+			this( v );
+		}
+	}, checkedCache); 
+	this.thisNoteEnabled = ko.observable( false );
+	this.noteEnabled = ko.computed( function() {
+		return this.thisNoteEnabled();
+	}, this);
+	this.msg = ko.computed( function() {
+		return this.noteEnabled() ? '' : '展開詳細說明';
+	}, this);
+	this.switchNotes = function( thisNews ) {
+		thisNews.thisNoteEnabled( !thisNews.thisNoteEnabled() );
+	};
+
+	this.tags = this.tags.replace(/ /g,'').split(',');
+
+	$.each( this.tags, function(i,tag) {
+		if( !(tag in vm.tags) ) {
+			vm.tags[tag] = { name: tag, cur: ko.observable(0), total: ko.observable(1) };
+			vm.tagsList.push( vm.tags[tag] );
+		} else {
+			vm.tags[tag].total( vm.tags[tag].total()+1 );
+		}
+	});
+}
+
 function newsVM() {
 	var self = this;
 
 	this.name = ko.observable('');
 	this.email = ko.observable('');
 	this.newsList = ko.observableArray();
-	this.tags = ko.observableArray();
+	this.tags = {};
+	this.tagsList = ko.observableArray();
 	this.maxSelected = 10;
-	this.curSelected = ko.observable(0);
+	this.curSelected = ko.observableArray();
 	this.spaceLeave = ko.computed( function() { 
-		return self.maxSelected - self.curSelected();
+		return self.maxSelected - self.curSelected().length;
 	});
 	this.nameChecker = ko.computed( function() {
-		return self.curSelected() == 0 || !!self.name();
+		return self.curSelected().length == 0 || !!self.name();
 	});
 	this.emailChecker = ko.computed( function() {
 		var emailReg = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-		return self.curSelected() == 0 || self.email().match( emailReg );
+		return self.curSelected().length == 0 || self.email().match( emailReg );
 	});
 	this.userInvalid = ko.computed( function() {
 		return !self.nameChecker() || !self.emailChecker();
@@ -25,7 +74,10 @@ function newsVM() {
 	this.allowSubmit = ko.computed( function() {
 		return 	!self.userInvalid() && 
 				self.spaceLeave() >= 0 &&
-				self.curSelected() > 0;
+				self.curSelected().length > 0;
+	});
+	this.submitText = ko.computed( function() {
+		return self.allowSubmit() ? '確定送出' : '無法送出';
 	});
 	this.prepareSubmit = function() {
 		if( self.allowSubmit() ) {
@@ -40,7 +92,8 @@ function newsVM() {
 
 	var formUrl = 'https://docs.google.com/forms/d/',
 		formKey = '1fAKVvzLFP32DFAaHK-PN94a7cjQsffuoCw0dMIflKmM',
-		formTail = '/formResponse';
+		formTail = '/formResponse',
+		submitComplete = false;
 
 	this.submit = function() {
 		var selectedNews = [];
@@ -62,6 +115,7 @@ function newsVM() {
 			traditional: true,
 			complete: function( resp ) {
 				alert('資料已送出， 謝謝您的大力支持、參與。');
+				submitComplete = true;
 				$('#summary').dialog('close');
 			}
 		});
@@ -76,40 +130,7 @@ function newsVM() {
 				indx = 3;
 
 			while( indx < totalCells ) {
-				var news = {},
-					checkedCache = ko.observable( false );
-
-				news.title = cells[indx].content.$t;
-				news.tags = cells[indx+1].content.$t;
-				news.notes = cells[indx+2].content.$t;
-				news.checked = ko.computed({
-					read: function() { return this(); },
-					write: function( v ) {
-						if( v ) {
-							self.curSelected( self.curSelected()+1 );
-						} else {
-							self.curSelected( self.curSelected()-1 );
-						}
-						this( v );
-					}
-				}, checkedCache); 
-				news.thisNoteEnabled = ko.observable( false );
-				news.noteEnabled = ko.computed( function() {
-					return this.thisNoteEnabled();
-				}, news);
-				news.msg = ko.computed( function() {
-					return this.noteEnabled() ? '' : '展開詳細說明';
-				}, news);
-				news.switchNotes = function( thisNews ) {
-					thisNews.thisNoteEnabled( !thisNews.thisNoteEnabled() );
-				};
-
-				news.tags = news.tags.replace(/ /g,'').split(',');
-				$.each( news.tags, function(i,tag) {
-					self.tags[tag] = ++self.tags[tag] || 0;
-				});
-
-				self.newsList.push( news );
+				self.newsList.push( new News( self, cells, indx ) );
 				indx += 3;
 			}
 		};
@@ -119,9 +140,38 @@ function newsVM() {
 		success: parseFeed
 	});
 
+	$(window).on( 'beforeunload', function() {
+		if( !submitComplete && 0 ) {
+			var msg = '評選尚未送出，您是否確定要離開？';
+
+			if(/Firefox[\/\s](\d+)/.test(navigator.userAgent) && new Number(RegExp.$1) >= 4) {
+				if(confirm(msg)) {
+					history.go();
+				} else {
+					window.setTimeout(function() {
+						window.stop();
+					}, 1);
+				}
+			} else {
+				return msg;
+			}
+		}
+	});
 }
 
 $(function() {
+
+	var jqSum = $('#summary-wrapper'),
+		jqWin = $(window),
+		sumTop = 135;
+
+	jqWin.scroll(function () {
+		if ( jqWin.scrollTop() > sumTop) {
+			jqSum.css( 'margin-top', jqWin.scrollTop() - sumTop );
+		} else {
+			jqSum.css( 'margin-top', 0 );
+		}
+	});
 
 	ko.applyBindings( new newsVM() );
 	$('input.required').placeholder();
@@ -137,17 +187,17 @@ $(function() {
 
 	Sammy( function() {
 
+		this.get( '#:news', function() {
+			window.location.hash = this.params['news'];
+		});
 		this.get( /.*\/poll/, function() {
-			$('#descriptions').hide();
-			$('#rules').hide();
-			$('#news-form-wrapper').show();
-			$('#poll-info').show();
+			$('.p1').hide();
+			$('.p2').show();
+			sumTop = jqSum.offset().top;
 		});
 		this.get('', function() {
-			$('#descriptions').show();
-			$('#rules').show();
-			$('#news-form-wrapper').hide();
-			$('#poll-info').hide();
+			$('.p1').show();
+			$('.p2').hide();
 		});
 
 	}).run();
