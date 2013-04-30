@@ -141,7 +141,7 @@ function newsVM() {
 	});
 
 	$(window).on( 'beforeunload', function() {
-		if( !submitComplete && 0 ) {
+		if( !submitComplete ) {
 			var msg = '評選尚未送出，您是否確定要離開？';
 
 			if(/Firefox[\/\s](\d+)/.test(navigator.userAgent) && new Number(RegExp.$1) >= 4) {
