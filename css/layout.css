@@ -198,6 +198,12 @@ body {
 /*	background-color: #f8cd02;*/
 }
 
+#summary-wrapper .rtsummary p.empty {
+	text-align: center;
+	padding: 4px;
+	margin: 0px;
+}
+
 #summary-wrapper .rtsummary p.title {
 	text-align: center;
 	font-size: 1.2em;

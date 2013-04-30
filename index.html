@@ -86,7 +86,7 @@
 			</div>
 			<div id="news-summary" class="rtsummary">
 				<p class="title"> 已選事件統計 </p>
-				<span data-bind="visible: curSelected().length == 0">無</span>
+				<p class="empty" data-bind="visible: curSelected().length == 0">無</p>
 				<div class="list" data-bind="foreach: curSelected">
 					<p class="toolong clearfix">
 						<a data-bind="attr: {href: '#news' + id}">
