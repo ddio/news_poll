@@ -73,8 +73,7 @@ function newsVM() {
 	});
 	this.allowSubmit = ko.computed( function() {
 		return 	!self.userInvalid() && 
-				self.spaceLeave() >= 0 &&
-				self.curSelected().length > 0;
+				self.spaceLeave() == 0;
 	});
 	this.submitText = ko.computed( function() {
 		return self.allowSubmit() ? '確定送出' : '無法送出';
@@ -163,13 +162,24 @@ $(function() {
 
 	var jqSum = $('#summary-wrapper'),
 		jqWin = $(window),
-		sumTop = 135;
+		sumTop = 135,
+		debouncer = null;
 
 	jqWin.scroll(function () {
-		if ( jqWin.scrollTop() > sumTop) {
-			jqSum.css( 'margin-top', jqWin.scrollTop() - sumTop );
-		} else {
-			jqSum.css( 'margin-top', 0 );
+		if( !debouncer ) {
+
+			debouncer = setTimeout( function() {
+				if ( jqWin.scrollTop() > sumTop) {
+					jqSum.animate( {
+							'margin-top': jqWin.scrollTop() - sumTop 
+						},
+						200
+					);
+				} else {
+					jqSum.css( 'margin-top', 0 );
+				}
+				debouncer = null;
+			}, 200);
 		}
 	});
 

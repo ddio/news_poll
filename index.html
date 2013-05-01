@@ -46,6 +46,7 @@
 				</li>
 				<li>選取時，可以較具歷史、長期、前瞻的結構性考量來遴選。</li>
 				<li>選取時，請注意不要過於集中某些指標類別的事件，盡量均衡選取。</li>
+				<li>在您勾選時，頁面右方會出現「已選類別統計」與「已選事件清單」，供您參酌。</li>
 			</ol>
 			<a href="poll"><button> 開始勾選 </button></a>
 		</div>
@@ -85,7 +86,7 @@
 				</div>
 			</div>
 			<div id="news-summary" class="rtsummary">
-				<p class="title"> 已選事件統計 </p>
+				<p class="title"> 已選事件清單 </p>
 				<p class="empty" data-bind="visible: curSelected().length == 0">無</p>
 				<div class="list" data-bind="foreach: curSelected">
 					<p class="toolong clearfix">
@@ -111,7 +112,7 @@
 	</div>
 	<div id="summary" class="hide">
 		<h3> 這是您所選擇的十大事件 </h3>
-		<p class="comment">請注意避免過於集中某些指標類別的事件，盡量均衡選取，檢查後按送出，謝謝您的大力支持、參與。 </p>
+		<p class="comment">請注意避免過於集中某些指標類別，盡量均衡選取，檢查後按送出，謝謝您的大力支持、參與。 </p>
 		<hr> 
 		<p> <span class="name"> 姓名： </span><span class="value" data-bind="text: name"></span></span> </p>
 		<p> <span class="name"> 電子郵件： </span><span class="value" data-bind="text: email"></span></span> </p>
