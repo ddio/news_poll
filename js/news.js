@@ -7,7 +7,7 @@ function News( vm, cells, indx ) {
 		checkedCache = ko.observable( false );
 
 	this.title = cells[indx].content.$t;
-	this.id = newsCount++;
+	this.nid = newsCount++;
 	this.tags = cells[indx+1].content.$t;
 	this.notes = cells[indx+2].content.$t;
 	this.checked = ko.computed({

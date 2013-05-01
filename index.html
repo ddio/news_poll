@@ -58,10 +58,11 @@
 					<span class="comment">* 本表單中「事件說明」僅供徵詢時參考之用，記者會發表及未來公佈時，會有更進一步的闡述與分析。</span>
 				</p>
 				<div class="news-list" data-bind="foreach: newsList">
-					<div class="news" data-bind="css: { checked: checked }, attr: {id: 'news'+id}">
-						<input type="checkbox" data-bind="checked: checked, attr: { 'id': 'news-'+id }">
-						<label data-bind="attr: {for: 'news-'+id}">
-								<span class="index" data-bind="text: id+'.'"></span>
+					<div class="news" data-bind="css: { checked: checked },
+						attr: {id: 'news'+nid}">
+						<input type="checkbox" data-bind="checked: checked, attr: { 'id': 'news-'+nid }">
+						<label data-bind="attr: {for: 'news-'+nid}">
+								<span class="index" data-bind="text: nid+'.'"></span>
 								<span class="title" data-bind="text: title"></span>
 							<div class="tags-wrapper" data-bind="foreach: tags">
 								<span class="tag" data-bind="text: $data"></span>
@@ -90,8 +91,8 @@
 				<p class="empty" data-bind="visible: curSelected().length == 0">無</p>
 				<div class="list" data-bind="foreach: curSelected">
 					<p class="toolong clearfix">
-						<a data-bind="attr: {href: '#news' + id}">
-							<span class="main" data-bind="text: id + '.' + title"></span>
+						<a data-bind="attr: {href: '#news' + nid}">
+							<span class="main" data-bind="text: nid + '.' + title"></span>
 							<span class="rest">...</span>
 						</a>
 					</p>
