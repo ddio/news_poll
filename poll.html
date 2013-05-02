@@ -48,7 +48,9 @@
 				<li>選取時，請注意不要過於集中某些指標類別的事件，盡量均衡選取。</li>
 				<li>在您勾選時，頁面右方會出現「已選類別統計」與「已選事件清單」，供您參酌。</li>
 			</ol>
-			<a href="poll"><button> 開始勾選 </button></a>
+			<form action="poll">
+				<a href="poll"><button> 開始勾選 </button></a>
+			</form>
 		</div>
 		<div id="news-form-wrapper" class="twelve columns p2">
 			<form id="news-form" data-bind="submit: prepareSubmit">
@@ -61,7 +63,7 @@
 					<div class="news" data-bind="css: { checked: checked },
 						attr: {id: 'news'+nid}">
 						<input type="checkbox" data-bind="checked: checked, attr: { 'id': 'news-'+nid }">
-						<label data-bind="attr: {for: 'news-'+nid}">
+						<label data-bind="attr: {'for': 'news-'+nid}">
 								<span class="index" data-bind="text: nid+'.'"></span>
 								<span class="title" data-bind="text: title"></span>
 							<div class="tags-wrapper" data-bind="foreach: tags">
