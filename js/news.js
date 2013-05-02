@@ -198,6 +198,8 @@ $(function() {
 	Sammy( function() {
 
 		this.get( '#:news', function() {
+			$('.p1').hide();
+			$('.p2').show();
 			window.location.hash = this.params['news'];
 		});
 		this.get( /.*\/poll/, function() {
