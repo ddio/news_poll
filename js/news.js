@@ -89,13 +89,17 @@ function newsVM() {
 			$('#summary').dialog('close');
 	}
 
-	var formUrl = 'https://docs.google.com/forms/d/',
+	var formUrl = 'http://docs.google.com/forms/d/',
 		formKey = '1fAKVvzLFP32DFAaHK-PN94a7cjQsffuoCw0dMIflKmM',
 		formTail = '/formResponse',
 		submitComplete = false;
 
 	this.submit = function() {
 		var selectedNews = [];
+
+		submitComplete = true;
+		$('form#submit-form').submit();
+		return;
 
 		$.each( self.newsList(), function( indx, news ) {
 			if( news.checked() ) {
@@ -108,8 +112,8 @@ function newsVM() {
 			dataType: 'xml',
 			data: {
 				'entry.54981871': self.name(),
-				'entry.242987477': self.email(),
-				'entry.695619516': selectedNews
+				'entry.242987477': self.email()//,
+//				'entry.695619516': selectedNews
 			},
 			traditional: true,
 			complete: function( resp ) {
