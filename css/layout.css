@@ -44,7 +44,8 @@ body {
 }
 
 #summary .comment .highlight {
-	color: red;
+	color: #fff;
+	background-color: red;
 }
 
 .summary-dia.ui-widget-content {
