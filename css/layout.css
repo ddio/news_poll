@@ -43,6 +43,10 @@ body {
 	font-size: 1.4em;
 }
 
+#summary .comment .highlight {
+	color: red;
+}
+
 .summary-dia.ui-widget-content {
 	border-color: #c7a402;
 	border-width: 2px;

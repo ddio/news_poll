@@ -81,6 +81,7 @@ function newsVM() {
 	this.prepareSubmit = function() {
 		if( self.allowSubmit() ) {
 			$('#summary').dialog('open');
+			$('#summary .highlight').effect('pulsate', { times: 5 }, 5000);
 			$('#summary').scrollTop(0);
 		}
 	};
@@ -100,28 +101,6 @@ function newsVM() {
 		submitComplete = true;
 		$('form#submit-form').submit();
 		return;
-
-		$.each( self.newsList(), function( indx, news ) {
-			if( news.checked() ) {
-				selectedNews.push( indx+1 );
-			}
-		});
-
-		$.ajax( formUrl+formKey+formTail, {
-			type: 'POST',
-			dataType: 'xml',
-			data: {
-				'entry.54981871': self.name(),
-				'entry.242987477': self.email()//,
-//				'entry.695619516': selectedNews
-			},
-			traditional: true,
-			complete: function( resp ) {
-				alert('資料已送出， 謝謝您的大力支持、參與。');
-				submitComplete = true;
-				$('#summary').dialog('close');
-			}
-		});
 	}
 
 	var feedUrl = 'http://spreadsheets.google.com/feeds/cells',
